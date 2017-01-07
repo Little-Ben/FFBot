@@ -1,0 +1,110 @@
+---------------------------------------------------------------------------   
+Installing FFBot
+---------------------------------------------------------------------------   
+
+Prerequisites:
+   - Linux server, with ability to set cronjobs (or similar scheduler)
+   - webserver with SSL support (Telegram's webhook does not work without)
+   - php >= 5.4 (tested on 5.6.21, unsure about 7.x)
+   - mysql (tested on 5.1.73)
+
+
+Steps for installing:
+
+0) Check for updates
+
+   Project: https://github.com/Little-Ben/FFBot
+
+   Stable Releases:
+     There will be no stable releases at the moment,
+     only what's on GitHub!
+
+   Source Code Management (latest but less tested code):
+     GitHub (main place for code, issue tracking, pull requests, etc.):    
+     https://github.com/Little-Ben/FFBot      
+	  
+1) Setup a mysql database on your webserver's host
+
+2) Copy files to your web server
+   
+   Be sure to secure your config folder (e.g. by using .htaccess),
+   it MUST NOT be reachable via internet (due to passwords, apikey, etc.)!
+
+3) Create a new Telegram Bot using Telegram's BotFather
+   see BOTFATHER.TXT 
+   
+---------------------------------------------------------------------------   
+   After finishing the steps from BOTFATHER.txt, return here an go on!
+---------------------------------------------------------------------------
+   
+4) Configuration
+   Copy 'config/config_example.json' to 'config/config.json'
+   Set all values according your needs,
+   especially database and telegram sections
+   - bot.admin-id (your telegram id, see bot.log, might be set later)
+   - bot.logfile
+   - map.meshviewer.url
+   - instances.telegram.apikey
+   - instances.telegram.bot-backend-url
+   - database (whole section)
+
+5) Call FFBot's webinterface ffbot_call.php in a browser.
+   This initializes the bot on Telegram side and database.
+   check log (config/bot.log) for:
+   - initBot: search log for "[BOT]"
+   - initDB: search log for "[DB]"
+   
+   If initialization is completed sucessfully, the following flags 
+   in config.json should be turned automatically from 0 to 1:
+   - database.initialized
+   - instances.telegram.bot-initialized
+   
+   Search log for [CONFIG] and check config.json for turned values.
+
+6) Open your Bot in Telegram, by typing t.me/your_bot's name 
+   in a browser and agree to open in Telegram 
+   (app or webinterface is needed).
+   Now click START or insert the following line as message
+   /start
+
+7) Cronjob
+   In order to have current node information in database, a cron job is
+   needed to actualize data.
+
+   Please setup a cronjob periodically for the file ffbot_check.php, e.g.
+   
+   * * * * * cd /home/MYUSER/html/bot && /usr/bin/php /home/MYUSER/html/bot/ffbot_check.php
+ 
+   or with a logfile in config folder
+ 
+   * * * * * cd /home/MYUSER/html/bot && /usr/bin/php /home/MYUSER/html/bot/ffbot_check.php > /home/MYUSER/html/bot/config/ffbot_check.log 2>&1
+   
+   My advice is to execute it each minute. 
+   But consider that with all the batman/alfred/respond stuff, 
+   it needs some time until a node alert is shown in Telegram 
+   after switching on-/offline state. In my experience a 
+   notification needs approx. 5-10 minutes.
+   
+
+8) The bot should theoretically work ;-)
+   Have fun with it!
+
+
+---------------------------------------------------------------------------   
+Updating FFBot
+---------------------------------------------------------------------------   
+
+IMPORTANT: 
+Before updating a running installation,
+be sure to have a backup of installation files AND database!!!
+
+In order to update do a git pull from yout bot's root directory.
+Be sure to compare config_example.json with your config.json, 
+so that you do not miss any changes!
+
+I am planing to automate any database updates. 
+More information will be given here, if this will be the case.
+
+see ./docs/CHANGELOG.txt for any release notes.
+
+(this document's version: 2017-01-07a)

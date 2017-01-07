@@ -1,0 +1,128 @@
+---------------------------------------------------------------------------
+BotFather
+---------------------------------------------------------------------------
+
+BotFather is a Telegram bot to create and administer your bot on Telegram.
+
+In order to start you need to open a chat to BotFather, e.g. by going to 
+http://t.me/BotFather
+
+This can be done by clicking on "SEND MESSAGE" (via app or webinterface).
+
+Communication with BotFather takes place by sending messages to it.
+All commands can be inserted as a message starting with the leading slash
+or be chosen in the '/' button next to the message input line. 
+At most times BotFather asks you something, then you can just send your 
+answer as a normal message back to it.
+
+Detailed information on bots in general can be found at:
+https://core.telegram.org/bots/api
+
+
+
+
+Steps for registering your bot in short
+=======================================
+
+This is part of INSTALL.txt, 
+please make sure to start with the steps given there!
+
+---------------------------------------------------------------------------
+0) open a chat with BotFather at http://t.me/BotFather (see above)
+
+---------------------------------------------------------------------------
+1) Create new bot
+Send following message to BotFather:
+/newbot
+
+---------------------------------------------------------------------------
+2) Bot's contact name
+Now insert the full name of your bot,
+this is any name you wish to be shown as contact (full) name of your bot, 
+e.g. Freifunker Fred
+
+Insert the name to config.json 
+-> bot.name
+
+---------------------------------------------------------------------------
+3) BotFather asks for bot's username
+now insert the username of your bot (it needs to end with bot),
+e.g. FFxx_Bot (where xx is your community's short name).
+
+Insert the username to config.json 
+-> instances.telegram.url (last part)
+
+---------------------------------------------------------------------------
+4) BotFather shows create message and APIKEY
+Keep the APIKEY safe, only you should know it!
+
+Insert APIKEY to config.json 
+-> instances.telegram.apikey
+
+---------------------------------------------------------------------------
+
+
+
+Now your bot is created with basic functionality.
+You should provide additional functionalities in order to increase 
+user's convinience.
+
+
+
+---------------------------------------------------------------------------
+5) Set user picture
+Send following message to BotFather:
+/setuserpic
+
+BotFather asks you to upload a picture,
+e.g. use the picture in includes/fred.jpg
+
+---------------------------------------------------------------------------
+6) Set command list
+Send following message to BotFather:
+/setcommands
+
+Choose your bot and send the follwing lines:
+
+info - [Knoten] - Infos zum Gesamtnetz/Knoten
+stats - - Statistiken
+link - - URL zur Weitergabe
+version - - Infos zu Version und Autor
+alarmadd - Name/ID - Alarm hinzufügen
+alarmdel - Name/ID - Alarm entfernen
+alarmlist - - aktive Alarme zeigen
+hilfe - - diese Hilfe
+
+---------------------------------------------------------------------------
+7) Description (shown when bot is started for the first time)
+Send following message to BotFather:
+/setdescription
+
+Choose your bot and enter descriptive text, 
+e.g. send the following lines (replace CAPITALIZED values):
+
+Dieser Bot gibt Informationen zum Netzstatus von Freifunk ENTENHAUSEN und
+bietet Knotenalarme (Benachrichtigungen wenn ein Knoten on/offline geht). 
+Verantwortlicher: @YOUR_TELEGRAM_USERNAME
+
+---------------------------------------------------------------------------
+8) About text  (shown in bot's contact details)
+Send following message to BotFather:
+/setabouttext
+
+Choose your bot and enter about text, 
+e.g. send the following lines (replace CAPITALIZED values):
+
+Freifunk ENTENHAUSEN: Netzinfos, Knotenalarme und mehr.
+
+---------------------------------------------------------------------------
+
+9) That's it. 
+
+
+Go on with installation steps in README.txt.
+This will create database and register Telegram's webhook (backend for 
+bot).
+
+
+(this document's version: 2017-01-07a)

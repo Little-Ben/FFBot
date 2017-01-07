@@ -1,0 +1,77 @@
+---------------------------------------------------------------------------
+Configuration of FFBot
+---------------------------------------------------------------------------
+
+Configuration takes place via 
+./config/config.json
+
+The following should give you hints on the entries used.
+Please be sure to have the syntax as given in 
+./config/config_example.json
+
+
+
+community:
+- full_name: full name of your community
+- url: your communities homepage
+
+bot: 
+- name: contact (full) name of your bot
+- loglevel: string of log events, log will be written, if flag is set here
+            following flags are available: 
+			  D - debug - log debugging infos, only turn on to debug
+			  I - input - log user's input
+			  N - notify - log notifications sent by cron job
+			  O - output - log output (replace: clrf, tabs; substr-145)
+			  P - parse - log recognized command during parsing input 
+			  R - read - log importing json -> db
+			There is an extra flag that could not be switched off:
+			  E - ERROR - log errors
+			Switching on/off a flag is simple inserting/removing it's 
+			flag in loglevel string.
+			Sugestion for regular logging is "loglevel": "INOP"
+- logfile: path with filename of your config file
+
+map: 
+- meshviewer: 
+-- url: url to your community's nodes.json file
+-- url_nodeinfo: url to call node details in map (including #!v:m;n:)
+                 e.g. "https://map.entenhausen.freifunk.net/#!v:m;n:" 
+
+instances: 
+- telegram: 
+-- alarm-test-node: a NODE_ID that could be used for testing by admin
+                    if /alarmtest is issued, this node's LAST_STATE will 
+					be set to 0. So this should be a node that is only in 
+					admin's alarmlist. This node should be online, in 
+					order that /alarmtest can work.
+-- apikey: the key of your bot, given you by BotFather
+-- bot-admin-id: admin's Telegram id, can be found in second coulumn in log
+                 after issuing a query after bot is set up correctly.
+                 Needed for /alarmtest (check that only admin can use). 
+-- bot-admin-c: your Telegram nick/username, starting with @
+-- bot-initialized: if 0, bot tries to register a webhook at Telegram 
+                    using apikey and bot-backend-url
+-- bot-backend-url: url to this bot's ffbot_call.php 
+                    HTTPS is needed, otherwise Telegram won't accept it
+-- linebreak: usually \r\n for Telegram
+-- url: your bot's url, e.g. telegram.me/FFEH_Bot 
+        (FFHE_Bot is your bot's username)
+
+- html: 
+-- admin-c: email address of bot admin
+-- linebreak: usually <br/> for html
+-- url: url to this bot's ffbot_call.php
+
+
+database: 
+- db: the name of your bot's database
+- initialized: if 0, bot initializes db (create tables, etc.)
+- pwd: the password of your bot's database
+- user: the user of your bot's database
+- verbose: true/false - give extra log and html output, only for debugging
+
+version: the numeric version of that file, 
+         if it changes, you need to compare your config vs. example-config
+
+(this document's version: 2017-01-07a)

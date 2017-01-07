@@ -1,0 +1,7 @@
+!/backup
+/backup/*
+!/backup/donotdelete.txt
+/config/config.json
+/docs/dev_notes.txt
+/logs/bot.log
+/logs/ffbot_check.log

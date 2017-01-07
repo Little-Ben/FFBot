@@ -1,0 +1,42 @@
+{
+    "community": {
+        "full_name": "Freifunk Entenhausen",
+        "url": "https://entenhausen.freifunk.net"
+    },
+    "bot": {
+        "name": "Freifunker Fred",
+        "loglevel": "DINOPR",
+        "logfile": "./logs/bot.log"
+    },
+    "map": {
+        "meshviewer": {
+            "url": "https://map.entenhausen.freifunk.net/nodes.json",
+            "url_nodeinfo": "https://map.entenhausen.freifunk.net/#!v:m;n:"
+        }
+    },
+    "instances": {
+        "telegram": {
+            "alarm-test-node": "abcdef123456",
+            "apikey": "112233445:KEYausTelegramAPIersetzenABC-LKSF6D",
+            "bot-admin-id": "12345678",
+            "bot-admin-c": "@ADMIN_TELEGRAM_NICK",
+            "bot-initialized": "0",
+            "bot-backend-url": "https://entenhausen.freifunk.net/bot/ffwpbot_call.php",
+            "linebreak": "\r\n",
+            "url": "telegram.me/FFEH_Bot"
+        },
+        "html": {
+            "admin-c": "bot-admin@entenhausen.freifunk.net.de",
+            "linebreak": "<br/>",
+            "url": "https://entenhausen.freifunk.net/bot/ffwpbot_call.php"
+        }
+    },
+    "database": {
+        "db": "database",
+        "initialized": "0",
+        "pwd": "password",
+        "user": "user",
+        "verbose": "false"
+    },
+    "version": "1"
+}

@@ -1,0 +1,35 @@
+FILES
+=====
+
+This files are currently part of FFBot.
+
+.\.gitignore
+.\backup
+.\config
+.\docs
+.\ffbot_call.php
+.\ffbot_check.php
+.\includes
+.\LICENSE.txt
+.\logs
+.\README.txt
+.\backup\donotdelete.txt
+.\config\.htaccess
+.\config\config_example.json
+.\docs\.htaccess
+.\docs\BOTFATHER.txt
+.\docs\CHANGELOG.txt
+.\docs\CONFIG_FILE.txt
+.\docs\FILES.txt
+.\docs\INSTALL.txt
+.\includes\FFBotLogic.php
+.\includes\fred.jpg
+.\includes\JSON.php
+.\includes\MySqlInterface.php
+.\includes\TelegramBot.php
+.\includes\template.html
+.\logs\.htaccess
+.\logs\donotdelete.txt
+
+
+(this document's version: 2017-01-07a)
