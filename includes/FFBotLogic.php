@@ -74,6 +74,44 @@ class FFWPBotLogic {
 
             switch ($msgCmd) {
 
+                case "/adminmsg":
+                    if ($obj) {
+                        $chat_id = $obj["message"]["from"]["id"];
+                        $admin_id = $this->config->getData()["instances"]["telegram"]["bot-admin-id"];
+
+                        if ($chat_id == $admin_id) {
+                            $sql = "select distinct chat_id from ffbot_alarms";
+                            $cnt = 0;
+
+                            $result = $this->db->queryResult($sql);
+                            if ($result) {
+                                $tgBot = new TelegramBot($this->config->getData()["instances"]["telegram"]["apikey"]);
+
+                                while($row = $result->fetch_assoc()) {
+                                    $to_id = $this->db->unescape($row['chat_id']);
+                                    $this->doLogDebug("adminmsg an $to_id / $msgParam");
+                                    $tgBot->sendMessage($to_id,$msgParam);
+                                    $cnt = $cnt + 1;
+
+                                    //in Telegram duerfen max 30 Nachrichten an veschiedene User pro Sekunde gesandt werden
+                                    if ($cnt % 25 == 0) {
+                                        sleep (1);
+                                        $this->doLogDebug("sleep-1");
+                                    }
+                                }
+
+                                $result->free();
+                                $retText = "Admin Nachricht an $cnt User gesandt.";
+                            }else
+                                $retText = "Keine User zum Benachrichtigen gefunden (keine Alarme definiert).";
+                        }else
+                            $retText = "Diese Funktion kann nur der Bot-Admin ausführen.";
+                    }else
+                        $retText = "Diese Funktion ist nur ueber Telegram moeglich.";
+
+                    $this->doLogParse($msgCmd,$obj);
+                    break;
+
                 case "/datum":
                     $retText = date("d.m.Y");
                     $this->doLogParse($msgCmd,$obj);
@@ -678,6 +716,7 @@ class FFWPBotLogic {
 
 
 } //Ende Klasse
+
 
 
 ?>
