@@ -3,8 +3,19 @@ CHANGELOG
 =========
 
 ---------------------------------------------------------------------------
-V0.5.0 - Little-Ben - 2017-01-07
-- initial version for GitHub
+V0.5.1 - Little-Ben - 2017-01-07
+- version number 0.5.1
+- add curly brackets to log event types for better grep usage
+- more code cleanig
+- introducing optional logging of /start event (S)
+- new feature /adminmsg to message all users with active node alarms
+- remove /test
+- code cleanup (idents, spaces, etc.)
 
+---------------------------------------------------------------------------
+V0.5.0 - Little-Ben - 2017-01-07
+- initial commit version 0.5.0
+- Rename LICENSE to LICENSE.txt
+- Initial commit
 
 (this document's version: 2017-01-07a)

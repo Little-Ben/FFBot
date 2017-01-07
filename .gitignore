@@ -3,5 +3,6 @@
 !/backup/donotdelete.txt
 /config/config.json
 /docs/dev_notes.txt
+/docs/gitlog.txt
 /logs/bot.log
 /logs/ffbot_check.log

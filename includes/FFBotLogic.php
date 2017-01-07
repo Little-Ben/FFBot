@@ -44,7 +44,7 @@ class FFWPBotLogic {
             $this->db->setVerboseMode(TRUE);
             $this->doLogDebug("config:database:verbose=true");
         }
-        $this->version = "0.5.0";
+        $this->version = "0.5.1";
         $this->doLogDebug("version=" . $this->version);
 
         if ($this->config->getData()["instances"]["telegram"]["bot-initialized"] == "0") {
