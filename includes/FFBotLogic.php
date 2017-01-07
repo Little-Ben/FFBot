@@ -356,14 +356,6 @@ class FFWPBotLogic {
                     $this->doLogParse($msgCmd,$obj);
                     break;
 
-                case "/test":
-                    $retText = $msgTextOrig . $crlf;
-                    $retText = $retText . $msgArray[0] . $crlf;
-                    $retText = $retText . $msgArray[1] . $crlf;
-
-                    $this->doLogParse($msgCmd,$obj);
-                    break;
-
                 case "/version":
                     $retText = "FFBot V." . $this->version . $crlf;
                     $retText = $retText . "by Little.Ben" . $crlf;
