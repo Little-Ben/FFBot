@@ -25,6 +25,7 @@ bot:
 			  O - output - log output (replace: clrf, tabs; substr-145)
 			  P - parse - log recognized command during parsing input 
 			  R - read - log importing json -> db
+			  S - start - log start events
 			There is an extra flag that could not be switched off:
 			  E - ERROR - log errors
 			Switching on/off a flag is simple inserting/removing it's 

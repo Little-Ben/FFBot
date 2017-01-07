@@ -386,6 +386,7 @@ class FFWPBotLogic {
                     $retText = $retText . "Viel Spaß - und funk frei!";
 
                     $this->doLogParse($msgCmd,$obj);
+                    $this->doLogStart($msgCmd,$obj);
                     break;
 
                 case "/tag":
@@ -589,6 +590,13 @@ class FFWPBotLogic {
             $this->doLog("notify\t " . $msgText,$obj);
     }
 
+    function doLogOutput($msgText,$obj,$crlf) {
+        $msgTextOut = substr(str_replace("\t","[TAB]",str_replace($crlf,"[CRLF]",$msgText)),0,145);
+        $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
+        if (strpos($loglevel,"O") > 0)
+            $this->doLog("output\t " . $msgTextOut,$obj);
+    }
+
     function doLogParse($msgText,$obj) {
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         if (strpos($loglevel,"P") > 0)
@@ -602,11 +610,28 @@ class FFWPBotLogic {
             $this->doLog("read\t " . $msgText,$obj);
     }
 
-    function doLogOutput($msgText,$obj,$crlf) {
-        $msgTextOut = substr(str_replace("\t","[TAB]",str_replace($crlf,"[CRLF]",$msgText)),0,145);
+    function doLogStart($msgText,$obj) {
+
+        $chat_id   = trim($obj["message"]["from"]["id"]);
+        if ($chat_id == "")
+            $chat_id = "n/a";
+
+        $firstname = trim($obj["message"]["from"]["first_name"]);
+        if ($firstname == "")
+            $firstname = "n/a";
+
+        $lastname  = trim($obj["message"]["from"]["last_name"]);
+        if ($lastname == "")
+            $lastname = "n/a";
+
+        $username  = trim($obj["message"]["from"]["username"]);
+        if ($username == "")
+            $username = "n/a";
+
+        $msgTextOut = "chat_id: $chat_id, firstname: $firstname, lastname: $lastname, username: $username";
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
-        if (strpos($loglevel,"O") > 0)
-            $this->doLog("output\t " . $msgTextOut,$obj);
+        if (strpos($loglevel,"S") > 0)
+            $this->doLog("start\t " . $msgTextOut,$obj);
     }
 
     function getUrl($url) {
