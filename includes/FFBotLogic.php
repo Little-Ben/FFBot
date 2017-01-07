@@ -564,50 +564,50 @@ class FFWPBotLogic {
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         $obj["message"]["from"]["id"]=1;
         if (strpos($loglevel,"D") > 0)
-            $this->doLog("debug\t " . $msgText,$obj);
+            $this->doLog("{debug}\t " . $msgText,$obj);
     }
 
     function doLogError($msgText) {
         $obj["message"]["from"]["id"]=1;
-        $this->doLog("ERROR\t " . $msgText,$obj);
+        $this->doLog("{ERROR}\t " . $msgText,$obj);
     }
 
     function doLogInit($msgText) {
         $obj["message"]["from"]["id"]=1;
-        $this->doLog("init\t " . $msgText,$obj);
+        $this->doLog("{init}\t " . $msgText,$obj);
     }
 
     function doLogInput($msgText,$obj) {
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         if (strpos($loglevel,"I") > 0)
-            $this->doLog("input\t " . $msgText,$obj);
+            $this->doLog("{input}\t " . $msgText,$obj);
     }
 
     function doLogNotify($msgText,$id) {
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         $obj["message"]["from"]["id"]=$id;
         if (strpos($loglevel,"N") > 0)
-            $this->doLog("notify\t " . $msgText,$obj);
+            $this->doLog("{notify}\t " . $msgText,$obj);
     }
 
     function doLogOutput($msgText,$obj,$crlf) {
-        $msgTextOut = substr(str_replace("\t","[TAB]",str_replace($crlf,"[CRLF]",$msgText)),0,145);
+        $msgTextOut = substr(str_replace("\t","[TAB]",str_replace($crlf,"[CRLF]",$msgText)),0,140);
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         if (strpos($loglevel,"O") > 0)
-            $this->doLog("output\t " . $msgTextOut,$obj);
+            $this->doLog("{output}\t " . $msgTextOut,$obj);
     }
 
     function doLogParse($msgText,$obj) {
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         if (strpos($loglevel,"P") > 0)
-            $this->doLog("parse\t " . substr($msgText,1),$obj);
+            $this->doLog("{parse}\t " . substr($msgText,1),$obj);
     }
 
     function doLogRead($msgText) {
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         $obj["message"]["from"]["id"]=1;
         if (strpos($loglevel,"R") > 0)
-            $this->doLog("read\t " . $msgText,$obj);
+            $this->doLog("{read}\t " . $msgText,$obj);
     }
 
     function doLogStart($msgText,$obj) {
@@ -631,7 +631,7 @@ class FFWPBotLogic {
         $msgTextOut = "chat_id: $chat_id, firstname: $firstname, lastname: $lastname, username: $username";
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         if (strpos($loglevel,"S") > 0)
-            $this->doLog("start\t " . $msgTextOut,$obj);
+            $this->doLog("{start}\t " . $msgTextOut,$obj);
     }
 
     function getUrl($url) {

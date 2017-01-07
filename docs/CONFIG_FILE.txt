@@ -22,7 +22,7 @@ bot:
               D - debug  - log debugging infos, only turn on to debug
               I - input  - log user's input
               N - notify - log notifications sent by cron job
-              O - output - log output (replace: clrf, tabs; substr-145)
+              O - output - log output (replace: clrf, tabs; substr-140)
               P - parse  - log recognized command during parsing input 
               R - read   - log importing json -> db
               S - start  - log start events
@@ -30,7 +30,7 @@ bot:
               E - ERROR  - log errors
             Switching on/off a flag is simple inserting/removing it's 
             flag in loglevel string.
-            Sugestion for regular logging is "loglevel": "INOP"
+            Suggestion for regular logging is "loglevel": "INOP"
 - logfile: path with filename of your config file
 
 map: 
