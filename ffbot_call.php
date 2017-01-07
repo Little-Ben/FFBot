@@ -1,8 +1,8 @@
 <?php
 /*
-	This file is part of FFBot
-	
-	Copyright (C) 2017 Benjamin Schmitt
+    This file is part of FFBot
+
+    Copyright (C) 2016-2017 Benjamin Schmitt
 
     FFBot is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with FFBot.  If not, see <http://www.gnu.org/licenses/>.
+    along with FFBot. If not, see <http://www.gnu.org/licenses/>.
 */
 
 include('includes/FFBotLogic.php');
@@ -24,25 +24,25 @@ setlocale(LC_ALL,"de_DE");
 
 $logic = new FFWPBotLogic();
 
-        function outputHtmlForm($logic) {
-                include('includes/template.html');
-        }
+function outputHtmlForm($logic) {
+        include('includes/template.html');
+}
 
-        // If the form has been sent, we need to handle the data.
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $msg = file_get_contents('php://input');
-                $obj=json_decode($msg,true);
+// If the form has been sent, we need to handle the data.
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $msg = file_get_contents('php://input');
+    $obj=json_decode($msg,true);
 
-                $retText = $logic->parseInput($obj["message"]["text"],"telegram",$obj);
+    $retText = $logic->parseInput($obj["message"]["text"],"telegram",$obj);
 
-                $bot = new TelegramBot($logic->config->getData()["instances"]["telegram"]["apikey"]);
-                $bot->sendMessage($obj["message"]["from"]["id"],$retText,true);
+    $bot = new TelegramBot($logic->config->getData()["instances"]["telegram"]["apikey"]);
+    $bot->sendMessage($obj["message"]["from"]["id"],$retText,true);
 
-        }else{
-                outputHtmlForm($logic);
-                if (isset($_GET["command"])){
-					echo $logic->parseInput(urldecode($_GET["command"]),"html") . "<br>";
-                }
-        }
+}else{
+    outputHtmlForm($logic);
+    if (isset($_GET["command"])){
+        echo $logic->parseInput(urldecode($_GET["command"]),"html") . "<br>";
+    }
+}
 
 ?>
