@@ -32,6 +32,8 @@ bot:
             flag in loglevel string.
             Suggestion for regular logging is "loglevel": "INOP"
 - logfile: path with filename of your config file
+- log_no_user_details: true, do not log any datails
+                      (Telegram: firstname, lastname,username)
 
 map: 
 - meshviewer: 
@@ -75,4 +77,4 @@ database:
 version: the numeric version of that file, 
          if it changes, you need to compare your config vs. example-config
 
-(this document's version: 2017-01-07b)
+(this document's version: 2017-01-08)

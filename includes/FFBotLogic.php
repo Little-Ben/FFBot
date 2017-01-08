@@ -69,6 +69,7 @@ class FFWPBotLogic {
         $msgParam = $msgArray[1];
 
         $this->doLogInput($msgTextOrig,$obj);
+        $this->actualizeUser($obj);
 
         if (substr($msgCmd,0,1) == "/" ) {
 
@@ -628,7 +629,12 @@ class FFWPBotLogic {
         if ($username == "")
             $username = "n/a";
 
-        $msgTextOut = "chat_id: $chat_id, firstname: $firstname, lastname: $lastname, username: $username";
+        //nur User details (Name) loggen, wenn gewuenscht (config)
+        if (strtolower($this->config->getData()["bot"]["log_no_user_details"]) != "true") 
+            $msgTextOut = "chat_id: $chat_id, firstname: $firstname, lastname: $lastname, username: $username";
+        else
+            $msgTextOut = "chat_id: $chat_id";
+
         $loglevel = "x".strtoupper($this->config->getData()["bot"]["loglevel"]);
         if (strpos($loglevel,"S") > 0)
             $this->doLog("{start}\t " . $msgTextOut,$obj);
@@ -705,6 +711,19 @@ class FFWPBotLogic {
         }else
             $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_settings anlegen: erfolgreich");
 
+        $sql = "CREATE TABLE IF NOT EXISTS " . $tabPrefix . "_users ( ";
+        $sql = $sql . "chat_id varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL, ";
+        $sql = $sql . "firstname varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL, ";
+        $sql = $sql . "lastname varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL, ";
+        $sql = $sql . "username varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL, ";
+        $sql = $sql . "last_seen datetime ";
+        $sql = $sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
+        if (!$this->db->queryResult($sql)) {
+            $this->doLogError("[DB] Tabelle " . $tabPrefix . "_users anlegen: Fehler " . $this->db->error());
+            die('Error: ' . $this->db->error());
+        }else
+            $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_users anlegen: erfolgreich");
+
         //falls leere settings-Tabelle, lege Zeile mit Version=1 an
         $sqlCntSettings = "select count(*) from " . $tabPrefix . "_settings";
         $retCntSettings = $this->db->queryCell($sqlCntSettings);
@@ -738,8 +757,64 @@ class FFWPBotLogic {
             $this->doLogError("[CONFIG] ungueltige DB-Version in Settings, bitte DB-Struktur manuell pruefen oder " . $tabPrefix. "* Tabellen loeschen (drop) und neu starten");
         }
     }
+    public function actualizeUser($obj) {
+        if ($obj) {
+
+            $chat_id = $obj["message"]["from"]["id"];
+            if ($chat_id != "")
+                $chat_id = "'$chat_id'";
+            else
+                $chat_id = "NULL";
+
+            $msgDate = $obj["message"]["date"]; // unix-time
+            if ($msgDate != "")
+                $msgDate = "FROM_UNIXTIME($msgDate)";
+            else
+                $msgDate = "NULL";
+
+            //nur User details (Name) loggen, wenn gewuenscht (config)
+            if (strtolower($this->config->getData()["bot"]["log_no_user_details"]) != "true") {
+                $firstname = trim($obj["message"]["from"]["first_name"]);
+                if ($firstname != "")
+                    $firstname = "'$firstname'";
+                else
+                    $firstname = "NULL";
+
+                $lastname  = trim($obj["message"]["from"]["last_name"]);
+                if ($lastname != "")
+                    $lastname = "'$lastname'";
+                else
+                    $lastname = "NULL";
+
+                $username  = trim($obj["message"]["from"]["username"]);
+                if ($username != "")
+                    $username = "'$username'";
+                else
+                    $username = "NULL";
+            }else{
+                $firstname = "NULL";
+                $lastname = "NULL";
+                $username = "NULL";
+            }
 
 
+            $this->db->executeStatement("delete from ffbot_users where chat_id is null");
+            $cntUsr = $this->db->queryCell("select count(*) from ffbot_users where chat_id=$chat_id");
+
+            if ($cntUsr > 0) {
+                $sql = "update ffbot_users ";
+                $sql = $sql . "set last_seen=$msgDate, firstname=$firstname, lastname=$lastname, username=$username ";
+                $sql = $sql . "where chat_id=$chat_id";
+            }else{
+                $sql = "insert into ffbot_users (chat_id,firstname,lastname,username,last_seen) ";
+                $sql = $sql . "values($chat_id, $firstname, $lastname, $username, $msgDate) ";
+            }
+
+            $this->doLogDebug($sql);
+            $cnt = $this->db->executeStatement($sql);
+            $this->db->commitTrans();
+        }
+    }
 } //Ende Klasse
 
 

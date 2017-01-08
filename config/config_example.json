@@ -6,7 +6,8 @@
     "bot": {
         "name": "Freifunker Fred",
         "loglevel": "DINOPR",
-        "logfile": "./logs/bot.log"
+        "logfile": "./logs/bot.log",
+        "log_no_user_details": "false"
     },
     "map": {
         "meshviewer": {
