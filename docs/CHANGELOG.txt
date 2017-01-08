@@ -3,6 +3,12 @@ CHANGELOG
 =========
 
 ---------------------------------------------------------------------------
+V0.5.2 - Little-Ben - 2017-01-08
+- Increase version to 0.5.2
+- Consider also new table ffbot_users for /adminmsg
+- Adding user logging mechanism
+
+---------------------------------------------------------------------------
 V0.5.1 - Little-Ben - 2017-01-07
 - version number 0.5.1
 - add curly brackets to log event types for better grep usage
@@ -18,4 +24,4 @@ V0.5.0 - Little-Ben - 2017-01-07
 - Rename LICENSE to LICENSE.txt
 - Initial commit
 
-(this document's version: 2017-01-07a)
+(this document's version: 2017-01-08)
