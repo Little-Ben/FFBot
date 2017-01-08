@@ -81,7 +81,7 @@ class FFWPBotLogic {
                         $admin_id = $this->config->getData()["instances"]["telegram"]["bot-admin-id"];
 
                         if ($chat_id == $admin_id) {
-                            $sql = "select distinct chat_id from ffbot_alarms";
+                            $sql = "select distinct chat_id from ffbot_alarms union select distinct chat_id from ffbot_users ";
                             $cnt = 0;
 
                             $result = $this->db->queryResult($sql);
