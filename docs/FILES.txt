@@ -32,4 +32,4 @@ This files are currently part of FFBot.
 .\logs\donotdelete.txt
 
 
-(this document's version: 2017-01-07a)
+(this document's version: 2017-01-08)

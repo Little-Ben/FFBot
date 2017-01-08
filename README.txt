@@ -43,6 +43,8 @@ Please see following files for further information:
 - ./README.txt - this readme file
 - ./docs/BOTFATHER.txt - helping you create your Telegram Bot
 - ./docs/CHANGELOG.txt - history of versions
+- ./docs/CONFIG_FILE.txt - description of config params
+- ./docs/FILES.txt - list of all files
 - ./docs/INSTALL.txt - installation and update instructions
 
 
@@ -66,4 +68,4 @@ https://github.com/Little-Ben/FFBot
 
 ---------------------------------------------------------------------------
 
-(this document's version: 2017-01-07a)
+(this document's version: 2017-01-08)
