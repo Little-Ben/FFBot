@@ -77,7 +77,7 @@ Steps for installing:
 
    or with a logfile in config folder
 
-   * * * * * cd /home/MYUSER/html/bot && /usr/bin/php /home/MYUSER/html/bot/ffbot_check.php > /home/MYUSER/html/bot/config/ffbot_check.log 2>&1
+   * * * * * cd /home/MYUSER/html/bot && /usr/bin/php /home/MYUSER/html/bot/ffbot_check.php > /home/MYUSER/html/bot/logs/ffbot_check.log 2>&1
 
    My advice is to execute it each minute. 
    But consider that with all the batman/alfred/respond stuff, 
