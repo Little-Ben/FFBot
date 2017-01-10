@@ -66,6 +66,13 @@ FFBot. Please make sure to contribute at GitHub:
 
 https://github.com/Little-Ben/FFBot
 
+
+FFBot-repos in the wild
+=======================
+This is a non-exhaustive list of communities using FFBot "Freifunker Fred":
+
+- Freifunk Westpfalz - https://github.com/Little-Ben/FFBot
+
 ---------------------------------------------------------------------------
 
-(this document's version: 2017-01-08)
+(this document's version: 2017-01-10)
