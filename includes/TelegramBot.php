@@ -29,8 +29,8 @@ class TelegramBot {
 
     public function sendMessage($chat_id, $text, $wait=false) {
 
-    if ($wait == true)
-        $this->sendChatAction($chat_id,"typing");
+        if ($wait == true)
+            $this->sendChatAction($chat_id,"typing");
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$this->baseUrl . $this->authKey . "/sendMessage");
