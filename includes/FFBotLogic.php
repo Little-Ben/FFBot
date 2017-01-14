@@ -571,6 +571,7 @@ class FFWPBotLogic {
     function doLogError($msgText) {
         $obj["message"]["from"]["id"]=1;
         $this->doLog("{ERROR}\t " . $msgText,$obj);
+        $this->notifyAdmin($msgText);
     }
 
     function doLogInit($msgText) {
@@ -812,6 +813,12 @@ class FFWPBotLogic {
                 $this->db->commitTrans();
             } //if chat_id null
         } //if obj
+    }
+
+    function notifyAdmin($msg) {
+        $tgBot = new TelegramBot($this->config->getData()["instances"]["telegram"]["apikey"]);
+        $to_id = $this->config->getData()["instances"]["telegram"]["bot-admin-id"];
+        $tgBot->sendMessage($to_id,$msg);
     }
 } //Ende Klasse
 

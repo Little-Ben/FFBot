@@ -4,6 +4,7 @@ CHANGELOG
 
 ---------------------------------------------------------------------------
 GitHub only (until next release):
+- Notifying admin on error
 - Ignoring messages with empty chat_id on acutalizing user
 - Correcting idents
 - FFBot-repos in the wild
