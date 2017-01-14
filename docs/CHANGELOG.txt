@@ -4,6 +4,10 @@ CHANGELOG
 
 ---------------------------------------------------------------------------
 GitHub only (until next release):
+
+---------------------------------------------------------------------------
+V0.5.3 - Little-Ben - 2017-01-14
+- Increasing version to 0.5.3
 - Notifying admin on error
 - Ignoring messages with empty chat_id on acutalizing user
 - Correcting idents
