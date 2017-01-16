@@ -565,7 +565,7 @@ class FFWPBotLogic {
 
     function doLogInit($msgText) {
         $obj["message"]["from"]["id"]=1;
-        $this->doLog("{init}\t " . $msgText,$obj);
+        $this->doLog("{init} \t " . $msgText,$obj);
     }
 
     function doLogInput($msgText,$obj) {
