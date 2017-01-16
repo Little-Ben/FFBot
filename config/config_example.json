@@ -7,7 +7,8 @@
         "name": "Freifunker Fred",
         "loglevel": "DINOPR",
         "logfile": "./logs/bot.log",
-        "log_no_user_details": "false"
+        "log_no_user_details": "false",
+        "maxMinuteDiffNodesJson": "5"
     },
     "map": {
         "meshviewer": {
@@ -39,5 +40,5 @@
         "user": "user",
         "verbose": "false"
     },
-    "version": "1"
+    "version": "2"
 }

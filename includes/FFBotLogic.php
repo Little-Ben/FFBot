@@ -854,11 +854,13 @@ class FFWPBotLogic {
                 $this->doLogError("Zeitabweichung der nodes.json ist $timeDiffMin Minuten.",false);
             }
         }else{
-            $this->db->beginTrans();
-            $cnt = $this->db->executeStatement("delete from ffbot_settings where s_key='time_warning'");
-            $this->db->commitTrans();
+            if ($timeWarning == 1) {
+                $this->db->beginTrans();
+                $cnt = $this->db->executeStatement("delete from ffbot_settings where s_key='time_warning'");
+                $this->db->commitTrans();
 
-            $this->notifyAdmin("Zeitabweichung wurde behoben.");
+                $this->notifyAdmin("Zeitabweichung wurde behoben.");
+            }
         }
     }
 } //Ende Klasse
