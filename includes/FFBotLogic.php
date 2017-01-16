@@ -489,6 +489,8 @@ class FFWPBotLogic {
             $this->doLogError("nodes.json import ERROR");
         }
         $this->setNodesTimestamp($nodes["timestamp"],$nodes["version"]);
+        sleep(1);
+        $this->checkDiffNodesTimestamp();
     }
 
     function checkForNodeAlarms() {
@@ -558,10 +560,11 @@ class FFWPBotLogic {
             $this->doLog("{debug}\t " . $msgText,$obj);
     }
 
-    function doLogError($msgText) {
+    function doLogError($msgText,$sendAdminNotify = true) {
         $obj["message"]["from"]["id"]=1;
         $this->doLog("{ERROR}\t " . $msgText,$obj);
-        $this->notifyAdmin($msgText);
+        if ($sendAdminNotify)
+            $this->notifyAdmin($msgText);
         return $msgText;
     }
 
@@ -823,6 +826,7 @@ class FFWPBotLogic {
         $tgBot = new TelegramBot($this->config->getData()["instances"]["telegram"]["apikey"]);
         $to_id = $this->config->getData()["instances"]["telegram"]["bot-admin-id"];
         $tgBot->sendMessage($to_id,$msg);
+        $this->doLogNotify("AdminNotify: " . $msg,$to_id);
     }
 
     function setNodesTimestamp($timestamp,$version) {
@@ -834,6 +838,29 @@ class FFWPBotLogic {
         $this->db->commitTrans();
     }
 
+    function checkDiffNodesTimestamp() {
+        $confTimeDiff = $this->config->getData()["bot"]["maxMinuteDiffNodesJson"];
+        $timeDiffMin = $this->db->queryCell("select TIMESTAMPDIFF(MINUTE,data_timestamp,UTC_TIMESTAMP()) from ffbot_current_nodes_info");
+        $timeWarning = $this->db->queryCell("select s_value from ffbot_settings where s_key='time_warning'");
+
+        if (abs($timeDiffMin) > $confTimeDiff) {
+            if ($timeWarning != 1) {
+                $this->doLogError("Zeitabweichung der nodes.json ist $timeDiffMin Minuten.");
+
+                $this->db->beginTrans();
+                $cnt = $this->db->executeStatement("insert into ffbot_settings (s_key,s_value) values ('time_warning',1)");
+                $this->db->commitTrans();
+            }else{
+                $this->doLogError("Zeitabweichung der nodes.json ist $timeDiffMin Minuten.",false);
+            }
+        }else{
+            $this->db->beginTrans();
+            $cnt = $this->db->executeStatement("delete from ffbot_settings where s_key='time_warning'");
+            $this->db->commitTrans();
+
+            $this->notifyAdmin("Zeitabweichung wurde behoben.");
+        }
+    }
 } //Ende Klasse
 
 ?>

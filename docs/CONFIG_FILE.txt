@@ -40,6 +40,9 @@ map:
 -- url: url to your community's nodes.json file
 -- url_nodeinfo: url to call node details in map (including #!v:m;n:)
                  e.g. "https://map.entenhausen.freifunk.net/#!v:m;n:" 
+-- maxMinuteDiffNodesJson: time difference between node.json's time and
+                           database's time in minutes
+                           (both should be in UTC)
 
 instances: 
 - telegram: 
@@ -76,5 +79,6 @@ database:
 
 version: the numeric version of that file, 
          if it changes, you need to compare your config vs. example-config
+         (current version number: 2)
 
-(this document's version: 2017-01-08)
+(this document's version: 2017-01-16)
