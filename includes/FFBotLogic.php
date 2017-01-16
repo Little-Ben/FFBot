@@ -85,7 +85,7 @@ class FFWPBotLogic {
                             $cnt = 0;
 
                             $result = $this->db->queryResult($sql);
-                            if ($result) {
+                            if ($this->db->getAffectedRows() > 0) {
                                 $tgBot = new TelegramBot($this->config->getData()["instances"]["telegram"]["apikey"]);
 
                                 while($row = $result->fetch_assoc()) {
@@ -255,7 +255,7 @@ class FFWPBotLogic {
                             order by c.hostname,a.node_id";
 
                         $result = $this->db->queryResult($sql);
-                        if ($result) {
+                        if ($this->db->getAffectedRows() > 0) {
                             while($row = $result->fetch_assoc()) {
                                 $retText = $retText . $this->db->unescape($row['RES_CONCAT']) . $crlf;
                                 $cnt = $cnt +1;
@@ -479,7 +479,6 @@ class FFWPBotLogic {
         }
 
         $sql = "insert into " . $tableName . "(node_id,hostname,curr_state) values\n" . substr($sql,1);
-
         $this->db->executeStatement($sql);
 
         if ($this->db->getAffectedRows() > 0 ) {
@@ -493,6 +492,7 @@ class FFWPBotLogic {
 
     function checkForNodeAlarms() {
         $i=0;
+        $retArr[0][0]=""; //needed in case of no resulting rows
         $result = $this->db->queryResult("
             select
                 a.chat_id,
@@ -508,28 +508,17 @@ class FFWPBotLogic {
                 and c.curr_state<>n.last_state
             order by node_id,chat_id");
 
-        if ($result) { //if result
+        if ($this->db->getAffectedRows() > 0) {
             while($row = $result->fetch_assoc()){
                 //echo $row['chat_id'] . ";" . $this->db->unescape($row['hostname']) . ";" . $row['curr_state'] . "\n";
-
                 $retArr[$i][0]=$row['chat_id'];
                 $retArr[$i][1]=$this->db->unescape($row['hostname']);
                 $retArr[$i][2]=$row['curr_state'];
                 $retArr[$i][3]=$this->db->unescape($row['node_id']);
                 $this->doLogNotify($retArr[$i][0]."/".$retArr[$i][1]."/".$retArr[$i][2]."/".$retArr[$i][3],$retArr[$i][0]);
                 $i+=1;
-
             }
             $result->free();
-        } //if result
-        else
-        {
-            // if result is empty (no alarms),
-            // create empty element (needs to be check in executing function)
-            $retArr[$i][0]="";
-            $retArr[$i][1]="";
-            $retArr[$i][2]="";
-            $retArr[$i][3]="";
         }
         return $retArr;
     }
