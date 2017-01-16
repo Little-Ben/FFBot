@@ -488,6 +488,7 @@ class FFWPBotLogic {
             $this->db->rollbackTrans();
             $this->doLogError("nodes.json import ERROR");
         }
+        $this->setNodesTimestamp($nodes["timestamp"],$nodes["version"]);
     }
 
     function checkForNodeAlarms() {
@@ -710,6 +711,24 @@ class FFWPBotLogic {
         }else
             $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_users anlegen: erfolgreich");
 
+        $sql = "CREATE TABLE IF NOT EXISTS " . $tabPrefix . "_current_nodes_info ( ";
+        $sql = $sql . "data_version varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL, ";
+        $sql = $sql . "data_timestamp timestamp";
+        $sql = $sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
+        if ($this->db->executeDDL($sql) === false) {
+            die('Error: ' . $this->doLogError("[DB] Tabelle " . $tabPrefix . "_current_nodes_info anlegen: ERROR"));
+        }else
+            $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_current_nodes_info anlegen: erfolgreich");
+
+        //falls leere current_nodes_info-Tabelle, lege Zeile mit Version=0 an
+        $sqlCntSettings = "select count(*) from " . $tabPrefix . "_current_nodes_info";
+        $retCntSettings = $this->db->queryCell($sqlCntSettings);
+        if ($retCntSettings == 0) {
+            $sql = "insert into " . $tabPrefix . "_current_nodes_info(data_version) values ('0') ";
+            $this->db->beginTrans();
+            $this->db->executeStatement($sql);
+        }
+
         //falls leere settings-Tabelle, lege Zeile mit Version=1 an
         $sqlCntSettings = "select count(*) from " . $tabPrefix . "_settings";
         $retCntSettings = $this->db->queryCell($sqlCntSettings);
@@ -805,8 +824,16 @@ class FFWPBotLogic {
         $to_id = $this->config->getData()["instances"]["telegram"]["bot-admin-id"];
         $tgBot->sendMessage($to_id,$msg);
     }
+
+    function setNodesTimestamp($timestamp,$version) {
+        $sql = "update ffbot_current_nodes_info set data_version='$version',data_timestamp='$timestamp'";
+        $this->doLogDebug($sql);
+
+        $this->db->beginTrans();
+        $cnt = $this->db->executeStatement($sql);
+        $this->db->commitTrans();
+    }
+
 } //Ende Klasse
-
-
 
 ?>
