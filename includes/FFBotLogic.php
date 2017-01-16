@@ -561,6 +561,7 @@ class FFWPBotLogic {
         $obj["message"]["from"]["id"]=1;
         $this->doLog("{ERROR}\t " . $msgText,$obj);
         $this->notifyAdmin($msgText);
+        return $msgText;
     }
 
     function doLogInit($msgText) {
