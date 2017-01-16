@@ -64,6 +64,10 @@ class MySqlInterface {
         return $this->affectedRows;
     }
 
+    public function executeDDL($sql) {
+        return $this->mysql->query($sql);
+    }
+
     public function getAffectedRows() {
         return $this->mysql->affected_rows;
         //return 0;
@@ -120,6 +124,7 @@ class MySqlInterface {
     public function error() {
         return $this->mysql->error();
     }
+
     public function __destruct() {
         //if ($this->verbose) echo $this->mysql->host_info . "\n";
         $this->mysql->close();

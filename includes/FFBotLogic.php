@@ -664,9 +664,8 @@ class FFWPBotLogic {
         $sql = $sql . "chat_id varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL, ";
         $sql = $sql . "node_id varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL ";
         $sql = $sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
-        if (!$this->db->queryResult($sql)) {
-            $this->doLogError("[DB] Tabelle " . $tabPrefix . "_alarms anlegen: Fehler " . $this->db->error());
-            die('Error: ' . $this->db->error());
+        if ($this->db->executeDDL($sql) === false) {
+            die('Error: ' . $this->doLogError("[DB] Tabelle " . $tabPrefix . "_alarms anlegen: ERROR"));
         }else
             $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_alarms anlegen: erfolgreich");
 
@@ -675,9 +674,8 @@ class FFWPBotLogic {
         $sql = $sql . "hostname varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL, ";
         $sql = $sql . "curr_state int(11) DEFAULT NULL ";
         $sql = $sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
-        if (!$this->db->queryResult($sql)) {
-            $this->doLogError("[DB] Tabelle " . $tabPrefix . "_current_nodes anlegen: Fehler " . $this->db->error());
-            die('Error: ' . $this->db->error());
+        if ($this->db->executeDDL($sql) === false) {
+            die('Error: ' . $this->doLogError("[DB] Tabelle " . $tabPrefix . "_current_nodes anlegen: ERROR"));
         }else
             $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_current_nodes anlegen: erfolgreich");
 
@@ -685,9 +683,8 @@ class FFWPBotLogic {
         $sql = $sql . "node_id varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL, ";
         $sql = $sql . "last_state int(11) DEFAULT NULL ";
         $sql = $sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
-        if (!$this->db->queryResult($sql)) {
-            $this->doLogError("[DB] Tabelle " . $tabPrefix . "_node anlegen: Fehler " . $this->db->error());
-            die('Error: ' . $this->db->error());
+        if ($this->db->executeDDL($sql) === false) {
+            die('Error: ' . $this->doLogError("[DB] Tabelle " . $tabPrefix . "_node anlegen: ERROR"));
         }else
             $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_node anlegen: erfolgreich");
 
@@ -695,9 +692,8 @@ class FFWPBotLogic {
         $sql = $sql . "s_key varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL, ";
         $sql = $sql . "s_value varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL ";
         $sql = $sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
-        if (!$this->db->queryResult($sql)) {
-            $this->doLogError("[DB] Tabelle " . $tabPrefix . "_settings anlegen: Fehler " . $this->db->error());
-            die('Error: ' . $this->db->error());
+        if ($this->db->executeDDL($sql) === false) {
+            die('Error: ' . $this->doLogError("[DB] Tabelle " . $tabPrefix . "_settings anlegen: ERROR"));
         }else
             $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_settings anlegen: erfolgreich");
 
@@ -708,9 +704,8 @@ class FFWPBotLogic {
         $sql = $sql . "username varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL, ";
         $sql = $sql . "last_seen datetime ";
         $sql = $sql . ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
-        if (!$this->db->queryResult($sql)) {
-            $this->doLogError("[DB] Tabelle " . $tabPrefix . "_users anlegen: Fehler " . $this->db->error());
-            die('Error: ' . $this->db->error());
+        if ($this->db->executeDDL($sql) === false) {
+            die('Error: ' . $this->doLogError("[DB] Tabelle " . $tabPrefix . "_users anlegen: ERROR"));
         }else
             $this->doLogInit("[DB] Tabelle " . $tabPrefix . "_users anlegen: erfolgreich");
 
