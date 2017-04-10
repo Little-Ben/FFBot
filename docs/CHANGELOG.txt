@@ -6,6 +6,11 @@ CHANGELOG
 GitHub only (until next release):
 
 ---------------------------------------------------------------------------
+V0.5.4 - Little-Ben - 2017-04-10
+- Increasing version to 0.5.4
+- Introduce config option to eiter define time as local or utc (nodes.json)
+
+---------------------------------------------------------------------------
 V0.5.3 - Little-Ben - 2017-01-14
 - Increasing version to 0.5.3
 - Notifying admin on error
@@ -38,4 +43,4 @@ V0.5.0 - Little-Ben - 2017-01-07
 - Rename LICENSE to LICENSE.txt
 - Initial commit
 
-(this document's version: 2017-01-14)
+(this document's version: 2017-04-10)

@@ -44,7 +44,7 @@ class FFWPBotLogic {
             $this->db->setVerboseMode(TRUE);
             $this->doLogDebug("config:database:verbose=true");
         }
-        $this->version = "0.5.3";
+        $this->version = "0.5.4";
         $this->doLogDebug("version=" . $this->version);
 
         if ($this->config->getData()["instances"]["telegram"]["bot-initialized"] == "0") {
@@ -134,7 +134,13 @@ class FFWPBotLogic {
                                     }
                             }
                     }
-                    $jsonDate = strftime("%d.%m.%Y %R",strtotime($nodes["timestamp"])+date('Z'));
+                    if (strtolower($this->config->getData()["map"]["meshviewer"]["use_utc"]) == "true") {
+
+                        $jsonDate = strftime("%d.%m.%Y %R",strtotime($nodes["timestamp"])+date('Z'));
+                    }else{
+                        $jsonDate = strftime("%d.%m.%Y %R",strtotime($nodes["timestamp"]));
+                    }
+                    $jsonDate = strftime("%d.%m.%Y %R",strtotime($nodes["timestamp"]));
                     $retText = "Knoten " . ($filter != "" ? "mit '$filter' im Namen" : "im Gesamtnetz") . ":" . $crlf;
                     $retText = $retText . " - Knoten: $nodeCount (online: " . ($nodeCount-$offlineCount) . ", offline: $offlineCount)" . $crlf;
                     $retText = $retText . " - Clients: $clientCount" . $crlf . "Datenstand: $jsonDate";
@@ -840,7 +846,13 @@ class FFWPBotLogic {
 
     function checkDiffNodesTimestamp() {
         $confTimeDiff = $this->config->getData()["bot"]["maxMinuteDiffNodesJson"];
-        $timeDiffMin = $this->db->queryCell("select TIMESTAMPDIFF(MINUTE,data_timestamp,UTC_TIMESTAMP()) from ffbot_current_nodes_info");
+
+        if (strtolower($this->config->getData()["map"]["meshviewer"]["use_utc"]) == "true") {
+            $timeDiffMin = $this->db->queryCell("select TIMESTAMPDIFF(MINUTE,data_timestamp,UTC_TIMESTAMP()) from ffbot_current_nodes_info");
+        }else{
+            $timeDiffMin = $this->db->queryCell("select TIMESTAMPDIFF(MINUTE,data_timestamp,NOW()) from ffbot_current_nodes_info");
+        }
+
         $timeWarning = $this->db->queryCell("select s_value from ffbot_settings where s_key='time_warning'");
 
         if (abs($timeDiffMin) > $confTimeDiff) {

@@ -13,7 +13,8 @@
     "map": {
         "meshviewer": {
             "url": "https://map.entenhausen.freifunk.net/nodes.json",
-            "url_nodeinfo": "https://map.entenhausen.freifunk.net/#!v:m;n:"
+            "url_nodeinfo": "https://map.entenhausen.freifunk.net/#!v:m;n:",
+            "use_utc": "false"
         }
     },
     "instances": {
@@ -40,5 +41,5 @@
         "user": "user",
         "verbose": "false"
     },
-    "version": "2"
+    "version": "3"
 }
